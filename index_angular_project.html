@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <title>ANGULAR_scope and controller</title>
+    <link rel="stylesheet" href="./partials/introAJS.css" />
+    <link rel="stylesheet" href="./partials/home.css" />
+</head>
+<script>
+//function img(){
+  //var image = document.getElementById("myImage").src="img.jpg";
+//}
+function welcome(){
+  alert('welcome!');
+}
+function bye(){
+  alert('bye!');
+}
+function lightUp(){
+  document.images["homeButton"].src="img1.jpg";
+}
+function dimDown(){
+  document.images["homeButton"].src="img2.jpg";
+}
+</script>
+<body ng-app="monApp" onLoad='welcome()' onUnload='bye()'>
+   <div id="bandeau">
+    <center>
+    <br><h1> COMM's application</h1><br>
+    <!--don't work : normalement apres survole e l'image une autre image apparait  -->
+    <a href="#" onmouseOver="lightUp();" onemouseOut="dimDown()";>
+      <img src="img1.jpg" name="homeButton" width=100 height=50 border=0></a>
+  </center>
+   </div>
+   <div ng-view></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://code.angularjs.org/1.6.4/angular-route.js"></script>
+  <script src="https://code.angularjs.org/1.6.4/angular-route.min.js"></script>
+  
+  <script>
+    var app=angular.module('monApp',['ngRoute']);
+    app.config(function($routeProvider){ 
+      $routeProvider
+      .when('/',{templateUrl:'partials/home.html'})
+      .when('/comments/:id',{templateUrl:'partials/comments.html'})
+      .otherwise({redirectTo:'/'});
+  });
+    
+    app.factory('postFactory',function(){
+      //object factory wich include articles and two methods
+      var factory={
+        posts:
+        [
+          {"id":1,
+        "name":"Albert Einstein",
+       "content":"Relativity theory",
+       "comments":
+       [
+       {
+        "username":"planck",
+        "city":"new york",
+        "email":"plank@gmail.com",
+        "content":"Et prima post Osdroenam quam, ut dictum est. "
+        }
+        ]
+          },
+          {"id":2,
+        "name":"Curie Pierre and Marie",
+       "content":"Radium discovery",
+       "comments":  
+        [
+        {
+        "username":"Mileva Maritch",
+        "city":"Bern",
+        "email":"mileva@gmail.com",
+        "content":"Et interdum acciderat, ut siquid in penetrali secreto nullo citerioris vitae ministro ."
+        }
+        ]
+          },
+          {"id":3,
+        "name":"Max Planck",
+       "content":"Quanta's theory",
+       "comments":
+       [
+       {
+        "username":"Albert Einstein",
+        "city":"Bern",
+        "email":"einstein@gmail.com",
+        "content":"Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante perstrinxi) ."
+       }
+       ]
+          },
+          {"id":4,
+        "name":"Maxwell",
+       "content":"Equations of electromagnetism",
+        "comments":
+        [
+        {
+         "username":"Tesla",
+         "city":"rome",
+         "email":"tesla@gmail.com",
+         "content":"Batnae municipium in Anthemusia conditum Macedonum manu priscorum ab Euphrate flumine brevi ."
+        }
+        ]
+          },
+          {"id":5,
+        "name":"Benjamin Franklin",
+       "content":"Declaration of human rights",
+       "comments":
+        [ 
+        {
+         "username":"Martin luther king",
+         "city":"new york",
+         "email":"MLK@gmail.com",
+         "content":"ntellectum est enim mihi quidem in multis, et maxime in me ipso, sed paulo ante in omnibus."
+        }
+        ]
+          }
+        ],
+        //return differents articles
+        getPosts:function(){
+          return factory.posts;
+        },
+        //take in paramater id of article to call
+        getPost:function(id){
+          //test with id=0 => dont work for other comments
+          //initialisation
+          var post={};
+          //browes comments
+          angular.forEach(factory.posts,function(value,key){
+            if(value.id==id){
+              post=value;
+            }
+          });
+          return post;
+        },
+      }
+      return factory;
+    })
+    //the controller need the factory to pass information
+    app.controller('postsCtrl',function($scope,postFactory){
+
+      $scope.posts=postFactory.getPosts();
+    
+
+    });
+
+    app.controller('comCtrl',function($scope,postFactory,$routeParams){
+      //$routeParam is an object allowing to retrieve the current set of route parameters.
+      //console.log($routeParams);
+      var post=postFactory.getPost($routeParams.id);
+      $scope.title= post.content;
+      $scope.comments= post.comments;
+      
+    });
+  </script>
+  <button>diagnosfast</button>
+</body>
+
+</html>
