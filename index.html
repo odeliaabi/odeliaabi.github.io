@@ -7,14 +7,33 @@
     <link rel="stylesheet" href="./partials/introAJS.css" />
     <link rel="stylesheet" href="./partials/home.css" />
 </head>
-
-<body ng-app="monApp">
+<script>
+//function img(){
+  //var image = document.getElementById("myImage").src="img.jpg";
+//}
+function welcome(){
+  alert('welcome!');
+}
+function bye(){
+  alert('bye!');
+}
+function lightUp(){
+  document.images["homeButton"].src="img1.jpg";
+}
+function dimDown(){
+  document.images["homeButton"].src="img2.jpg";
+}
+</script>
+<body ng-app="monApp" onLoad='welcome()' onUnload='bye()'>
    <div id="bandeau">
     <center>
     <br><h1> COMM's application</h1><br>
+    <!--don't work : normalement apres survole e l'image une autre image apparait  -->
+    <a href="#" onmouseOver="lightUp();" onemouseOut="dimDown()";>
+      <img src="img1.jpg" name="homeButton" width=100 height=50 border=0></a>
   </center>
    </div>
-	 <div ng-view></div>
+   <div ng-view></div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
   <script src="https://code.angularjs.org/1.6.4/angular-route.js"></script>
   <script src="https://code.angularjs.org/1.6.4/angular-route.min.js"></script>
@@ -43,12 +62,6 @@
         "city":"new york",
         "email":"plank@gmail.com",
         "content":"Et prima post Osdroenam quam, ut dictum est. "
-        },
-        {
-        "username":"faraday",
-        "city":"london",
-        "email":"faraday@gmail.com",
-        "content":"Sanctissime maximis ignorat ornanemta impetus in vero Quae cum maximis signa atque Mithridaticos exhausti . "
         }
         ]
           },
@@ -75,19 +88,7 @@
         "city":"Bern",
         "email":"einstein@gmail.com",
         "content":"Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante perstrinxi) ."
-       },
-       {
-        "username":"Boltzmann",
-        "city":"Bern",
-        "email":"boltzmann@gmail.com",
-        "content":"Culpa aerarii inpositae classi facta insulam nobis iuste nunc advectae ordo ordo magis voluntaria rege per proscribi rege foederato facta."
-       },
-       {
-        "username":"Maxwell",
-        "city":"New York",
-        "email":"maxwell@gmail.com",
-        "content":"Civitatibus de de exarsit conaretur ultra in conducentia per saluti Gallus agitare remoti itinera sunt modum saluti omnes casu nequo conaretur quaedam agentes conaretur conaretur ."
-       },
+       }
        ]
           },
           {"id":4,
@@ -113,12 +114,6 @@
          "city":"new york",
          "email":"MLK@gmail.com",
          "content":"ntellectum est enim mihi quidem in multis, et maxime in me ipso, sed paulo ante in omnibus."
-        },
-        {
-         "username":"Margareth Tatcher",
-         "city":"london",
-         "email":"MT@gmail.com",
-         "content":"Semper semper dum auctoritas amicorum si igitur ad adsit consilium res eaque consilium ad in."
         }
         ]
           }
@@ -160,7 +155,7 @@
       
     });
   </script>
-  
+  <button>diagnosfast</button>
 </body>
 
 </html>
